@@ -1,6 +1,8 @@
 class JournalsController < ApplicationController
+
+    before_action :set_journal, only: [:show, :edit, :update, :destroy]
+
     def show
-        @journal = Journal.find(params[:id])
     end
 
     def index
@@ -8,7 +10,7 @@ class JournalsController < ApplicationController
     end
 
     def create
-        @journal = Journal.new(params.require(:journal).permit(:title, :description))
+        @journal = Journal.new(journal_params)
         if @journal.save
             flash[:notice] = "Journal was saved in the database"
             redirect_to @journal
@@ -22,12 +24,10 @@ class JournalsController < ApplicationController
     end
 
     def edit
-        @journal = Journal.find(params[:id])
     end
 
     def update
-        @journal = Journal.find(params[:id])
-        if @journal.update(params.require(:journal).permit(:title, :description))
+        if @journal.update(journal_params)
             flash[:notice] = "Journal updated"
             redirect_to @journal
         else
@@ -36,9 +36,17 @@ class JournalsController < ApplicationController
     end
 
     def destroy
-        @journal = Journal.find(params[:id])
         @journal.destroy
         redirect_to journals_path
+    end
+
+    private
+    def set_journal
+        @journal = Journal.find(params[:id])
+    end
+
+    def journal_params
+        params.require(:journal).permit(:title, :description)
     end
 
 end
