@@ -2,3 +2,7 @@
 <p><strong>Date: </strong> <%= @journal.created_at %> </p>
 <p><strong>Title: </strong><%= @journal.title %></p>
 <p><strong>Entry: </strong><%= @journal.description %></p>
+
+<%= link_to 'Edit', edit_journal_path(@journal.id) %> |
+<%= link_to 'Delete', journal_path(@journal.id), method: :delete, data: {confirm: "Are you sure you wanna delete this record"} %> |
+<%= link_to 'Journal Lisings', journals_path %>

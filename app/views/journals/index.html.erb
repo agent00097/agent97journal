@@ -1,20 +1,27 @@
 <h1> All your Journals </h1>
 
+<%= link_to 'Create New Entry', new_journal_path %>
+<br>
+<hr>
+
 <table>
     <thead>
         <tr>
             <th>Date</th>
             <th>Title</th>
-            <th>Actions</th>
+            <th colspan="3">Actions</th>
         </tr>
     </thead>
 
     <tbody>
-    <% @journals.each do |journal| %>
+        <% @journals.each do |journal| %>
         <tr>
             <td><%= journal.created_at %> </td>
             <td><%= journal.title %> </td>
-            <td>Placeholder</td>
+            <td><%= link_to 'View', journal_path(journal.id) %></td>
+            <td><%= link_to 'Update', edit_journal_path(journal.id) %></td>
+            <td><%= link_to 'Delete', journal_path(journal.id), method: :delete, data: {confirm: "Are you sure you wanna delete this record"} %></td>
+
         </tr>
         <% end %>
     </tbody>
